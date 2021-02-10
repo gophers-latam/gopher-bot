@@ -19,7 +19,7 @@ func SQLiteConn() *sql.DB {
 		return db
 	}
 
-	db, err := sql.Open("sqlite3", "/data.sqlite")
+	db, err := sql.Open("sqlite3", "data.sqlite")
 	if err != nil {
 		panic(err)
 	}
@@ -29,7 +29,7 @@ func SQLiteConn() *sql.DB {
 
 func (res *Respuestas) GetMsg(cmd string) (*Respuestas, error) {
 	db := SQLiteConn()
-	q := `SELECT id, comando, respuesta, FROM messages WHERE comando = ?`
+	q := `SELECT id, comando, respuesta FROM messages WHERE comando = ?`
 
 	err := db.QueryRow(q, cmd).Scan(&res.ID, &res.Comando, &res.Respuesta)
 	defer db.Close()
