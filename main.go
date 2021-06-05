@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -30,11 +31,10 @@ func main() {
 		return
 	}
 
-	/*go func() {
-		log.Fatal("Err http serv",
-		http.ListenAndServe(":"+config.Port(),
-		nil))
-	}()*/
+	go func() {
+		http.HandleFunc("/", web)
+		log.Fatal("Err http serv", http.ListenAndServe(":"+config.Port(), nil))
+	}()
 
 	// Until CTRL-C or other term signal.
 	log.Println("Bot running. Press CTRL-C to exit.")
